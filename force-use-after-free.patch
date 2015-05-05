@@ -1,0 +1,22 @@
+diff --git a/drivers/base/firmware_class.c b/drivers/base/firmware_class.c
+index 2e85860..397ff05 100644
+--- a/drivers/base/firmware_class.c
++++ b/drivers/base/firmware_class.c
+@@ -29,6 +29,7 @@
+ #include <linux/syscore_ops.h>
+ #include <linux/reboot.h>
+ #include <linux/security.h>
++#include <linux/delay.h>
+ 
+ #include <generated/utsrelease.h>
+ 
+@@ -1236,6 +1237,9 @@ static void request_firmware_work_func(struct work_struct *work)
+ 
+ 	fw_work = container_of(work, struct firmware_work, work);
+ 
++	pr_info("firmware name: %s\n", fw_work->name);
++	ssleep(4);
++	pr_info("firmware name: %s\n", fw_work->name);
+ 	_request_firmware(&fw, fw_work->name, fw_work->device,
+ 			  fw_work->opt_flags);
+ 	fw_work->cont(fw, fw_work->context);
